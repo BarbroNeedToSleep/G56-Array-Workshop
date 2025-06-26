@@ -1,5 +1,7 @@
 package se.lexicon;
 
+import java.util.Arrays;
+
 /**
  * The NameRepository class provides methods to manage a list of names.
  * It offers functionalities such as adding, removing, finding, and updating names.
@@ -7,6 +9,7 @@ package se.lexicon;
 public class NameRepository {
 
     private static String[] names = new String[0];
+    private static String[] extraNames = new String[0];
 
 
     /**
@@ -15,8 +18,8 @@ public class NameRepository {
      * @return The number of elements in the names array.
      */
     public static int getSize() {
-        //todo: implement getSize method
-        return 0;
+
+        return names.length;
     }
 
 
@@ -26,7 +29,13 @@ public class NameRepository {
      * @param names The array of names to set.
      */
     public static void setNames(String[] names) {
-        //todo: implement setNames method
+
+        NameRepository.names = names;
+
+        extraNames = new String[names.length];
+        System.arraycopy(names, 0, extraNames, 0, names.length);
+
+
     }
 
 
@@ -34,7 +43,9 @@ public class NameRepository {
      * Clears the names array by creating a new empty array.
      */
     public static void clear() {
-        //todo: implement clear method
+
+        names = new String[0];
+
     }
 
 
@@ -44,8 +55,10 @@ public class NameRepository {
      * @return A new array containing all elements from the names array.
      */
     public static String[] findAll() {
-        //todo: implement findAll method
-        return null;
+        names = new String[extraNames.length];
+        System.arraycopy(extraNames, 0, names, 0, extraNames.length);
+        //NameRepository.names = extraNames;
+        return names;
     }
 
 
@@ -56,8 +69,19 @@ public class NameRepository {
      * @return The matching name if found; otherwise, null.
      */
     public static String find(String fullName) {
-        //todo: implement find method
-        return null;
+
+       Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
+
+        int index = Arrays.binarySearch(NameRepository.names, fullName, String.CASE_INSENSITIVE_ORDER);
+
+
+       if(index < 0){
+            return null;
+            //System.out.println("Name not Found");
+        }else {
+            System.out.println("Name Found: " + NameRepository.names[index]);
+            return NameRepository.names[index];
+        }
     }
 
 
@@ -68,8 +92,30 @@ public class NameRepository {
      * @return True if the fullName is added successfully; false if it already exists.
      */
     public static boolean add(String fullName) {
-        //todo: implement add method
-        return false;
+
+        Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
+        int index = Arrays.binarySearch(NameRepository.names, fullName, String.CASE_INSENSITIVE_ORDER);
+
+        if (index >= 0 ){
+            System.out.println("Name already reg");
+            return false;
+        } else {
+            String[] newNames = new String[NameRepository.names.length +1];
+            String newElement = fullName;
+
+            for (int i = 0; i < NameRepository.names.length; i++){
+                newNames[i] = NameRepository.names[i];
+            }
+            newNames[newNames.length -1] = newElement;
+
+            System.out.println("Expanded name list: ");
+            for (String n : newNames){
+                System.out.print(n + " ");
+            }
+            return true;
+        }
+
+
     }
 
 
