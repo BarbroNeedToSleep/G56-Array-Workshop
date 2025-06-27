@@ -10,6 +10,7 @@ public class NameRepository {
 
     private static String[] names = new String[0];
     private static String[] extraNames = new String[0];
+    private static String[] newNames = new String[0];
 
 
     /**
@@ -70,15 +71,15 @@ public class NameRepository {
      */
     public static String find(String fullName) {
 
-       Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
+        Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
 
         int index = Arrays.binarySearch(NameRepository.names, fullName, String.CASE_INSENSITIVE_ORDER);
 
 
-       if(index < 0){
+        if (index < 0) {
             return null;
             //System.out.println("Name not Found");
-        }else {
+        } else {
             System.out.println("Name Found: " + NameRepository.names[index]);
             return NameRepository.names[index];
         }
@@ -96,22 +97,23 @@ public class NameRepository {
         Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
         int index = Arrays.binarySearch(NameRepository.names, fullName, String.CASE_INSENSITIVE_ORDER);
 
-        if (index >= 0 ){
+        if (index >= 0) {
             System.out.println("Name already reg");
             return false;
         } else {
-            String[] newNames = new String[NameRepository.names.length +1];
+            newNames = new String[NameRepository.names.length + 1];
             String newElement = fullName;
 
-            for (int i = 0; i < NameRepository.names.length; i++){
+            for (int i = 0; i < NameRepository.names.length; i++) {
                 newNames[i] = NameRepository.names[i];
             }
-            newNames[newNames.length -1] = newElement;
+            newNames[newNames.length - 1] = newElement;
 
             System.out.println("Expanded name list: ");
-            for (String n : newNames){
+            for (String n : newNames) {
                 System.out.print(n + " ");
             }
+            System.out.println();
             return true;
         }
 
@@ -126,10 +128,37 @@ public class NameRepository {
      * @return An array containing all matching names.
      */
     public static String[] findByFirstName(String firstName) {
-        //todo: findByFirstName method
-        return null;
-    }
+        String[] foundNames = new String[0];
 
+
+        //Gå igenom namn i samlingen
+        for (int i = 0; i < names.length; i++) {
+
+            // dela del aktuella namnet i tva och skara forsta delen (firstname)
+            String splitFristName = NameRepository.names[i].split(" ")[0];
+
+            //kontrollera ifall namnet ar det vi soker
+            //ifall namnet matchar spara hela namnet i en array
+            if (splitFristName.equalsIgnoreCase(firstName)) {
+                // hela namnet
+                String fullname = NameRepository.names[i];
+                //Spara hela namne i en array (Expandera foundNames)
+               String[] temp  = new String[foundNames.length + 1];
+
+               // fyll i tidigare hittade namnen i en ny array
+                for (int j = 0; j < foundNames.length; j++) {
+                    temp[j] = foundNames[j];
+                }
+                // lagg till det senaste hittade namnet
+                temp[temp.length - 1] = fullname;
+
+                //spara om
+                foundNames = temp;
+            }
+        }
+
+        return foundNames;
+    }
 
     /**
      * Find all names that match the given lastName.
@@ -138,8 +167,38 @@ public class NameRepository {
      * @return An array containing all matching names.
      */
     public static String[] findByLastName(String lastName) {
-        //todo: implement findByLastName method
-        return null;
+
+        String[] foundLastNames = new String[0];
+
+
+        //Gå igenom namn i samlingen
+        for (int i = 0; i < names.length; i++) {
+
+            // dela del aktuella namnet i tva och skara forsta delen (firstname)
+            String splitLastName = NameRepository.names[i].split(" ")[1];
+
+            //kontrollera ifall namnet ar det vi soker
+            //ifall namnet matchar spara hela namnet i en array
+            if (splitLastName.equalsIgnoreCase(lastName)) {
+                // hela namnet
+                String fullname = NameRepository.names[i];
+                //Spara hela namne i en array (Expandera foundLastNames)
+                String[] temp  = new String[foundLastNames.length + 1];
+
+                // fyll i tidigare hittade namnen i en ny array
+                for (int j = 0; j < foundLastNames.length; j++) {
+                    temp[j] = foundLastNames[j];
+                }
+                // lagg till det senaste hittade namnet
+                temp[temp.length - 1] = fullname;
+
+                //spara som
+                foundLastNames = temp;
+            }
+        }
+
+        return foundLastNames;
+
     }
 
 
