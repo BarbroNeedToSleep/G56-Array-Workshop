@@ -134,10 +134,10 @@ public class NameRepository {
         //Gå igenom namn i samlingen
         for (int i = 0; i < names.length; i++) {
 
-            // dela del aktuella namnet i tva och skara forsta delen (firstname)
+            // dela del aktuella namnet i två och spara forsta delen (firstname)
             String splitFristName = NameRepository.names[i].split(" ")[0];
 
-            //kontrollera ifall namnet ar det vi soker
+            //kontrollera ifall namnet ar det vi söker
             //ifall namnet matchar spara hela namnet i en array
             if (splitFristName.equalsIgnoreCase(firstName)) {
                 // hela namnet

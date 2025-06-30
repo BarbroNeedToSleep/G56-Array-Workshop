@@ -10,11 +10,12 @@ public class App {
         System.out.println(size);
         NameRepository.setNames(new String[]{"Erik Svensson", "Mehrdad Javan", "Erik Karlsson", "Lina Svensson"});
         System.out.println(NameRepository.getSize());
-        NameRepository.clear();
+//        NameRepository.clear();
+//        System.out.println(NameRepository.getSize());
         NameRepository.findAll();
-       // System.out.println(Arrays.toString(NameRepository.findAll()));
-        //System.out.println(NameRepository.getSize());
-       // NameRepository.find("Erik Svensson");
+        System.out.println(Arrays.toString(NameRepository.findAll()));
+        System.out.println(NameRepository.getSize());
+        NameRepository.find("Erik Svensson");
         NameRepository.add("Lina Katt");
 
         System.out.println("nu ska vi se!");
